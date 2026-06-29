@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projeto Pequeno Marinheiro | Agricultura Familiar e Sustentabilidade</title>
+  <meta name="description" content="Projeto Pequeno Marinheiro: agricultura familiar, produção sustentável, capacitação, geração de renda e impacto social em Praia Norte, Tocantins." />
+  <style>
+    :root{
+      --acid:#d7ff00;
+      --lime:#19ff64;
+      --electric:#00e5ff;
+      --blue:#1137ff;
+      --violet:#8b00ff;
+      --pink:#ff1fae;
+      --orange:#ff7a00;
+      --red:#ff2233;
+      --black:#05050b;
+      --deep:#07130c;
+      --white:#ffffff;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --glass:rgba(255,255,255,.11);
+      --glass-strong:rgba(255,255,255,.18);
+      --line:rgba(255,255,255,.22);
+      --shadow:0 30px 90px rgba(0,0,0,.42);
+      --radius:30px;
+      --max:1160px;
+      --font:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;background:#05050b}
+    body{
+      font-family:var(--font);color:var(--text);overflow-x:hidden;line-height:1.55;
+      background:
+        radial-gradient(circle at 12% 8%,rgba(255,31,174,.45),transparent 26%),
+        radial-gradient(circle at 88% 12%,rgba(0,229,255,.40),transparent 27%),
+        radial-gradient(circle at 50% 80%,rgba(215,255,0,.26),transparent 28%),
+        linear-gradient(135deg,#05050b,#07130c 42%,#170027 100%);
+      background-attachment:fixed;
+    }
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-3;pointer-events:none;
+      background:linear-gradient(120deg,rgba(255,31,174,.28),rgba(0,229,255,.23),rgba(215,255,0,.18),rgba(255,122,0,.22));
+      background-size:400% 400%;animation:bgMadness 9s ease-in-out infinite;
+    }
+    body::after{
+      content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.16;
+      background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);
+      background-size:42px 42px;mask-image:radial-gradient(circle at center,#000 0 55%,transparent 90%);
+    }
+    @keyframes bgMadness{0%,100%{background-position:0% 50%;filter:hue-rotate(0deg)}50%{background-position:100% 50%;filter:hue-rotate(35deg)}}
+    a{text-decoration:none;color:inherit}
+    img{max-width:100%;display:block}
+    .container{width:min(var(--max),calc(100% - 36px));margin-inline:auto}
+    .section{position:relative;padding:105px 0;overflow:hidden}
+    .section::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.92}
+    .section:nth-of-type(odd)::before{background:linear-gradient(135deg,rgba(17,55,255,.55),rgba(255,31,174,.28),rgba(5,5,11,.84))}
+    .section:nth-of-type(even)::before{background:linear-gradient(135deg,rgba(0,229,255,.24),rgba(215,255,0,.20),rgba(5,5,11,.90))}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;text-transform:uppercase;letter-spacing:.16em;font-size:.72rem;font-weight:1000;color:#08080c;background:linear-gradient(90deg,var(--acid),var(--electric));border-radius:999px;padding:10px 15px;box-shadow:0 0 35px rgba(215,255,0,.35);border:1px solid rgba(255,255,255,.45)}
+    .title{font-size:clamp(2.55rem,6vw,6.35rem);line-height:.86;letter-spacing:-.085em;color:white;margin:20px 0 18px;text-shadow:0 0 25px rgba(0,229,255,.30),0 0 60px rgba(255,31,174,.25)}
+    .lead{font-size:1.12rem;color:var(--muted);max-width:760px;font-weight:650}
+    .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;border-radius:999px;padding:16px 26px;font-weight:1000;border:1px solid rgba(255,255,255,.32);transition:.28s ease;cursor:pointer;overflow:hidden;text-transform:uppercase;letter-spacing:.035em}
+    .btn::before{content:"";position:absolute;inset:-50%;background:conic-gradient(from 0deg,var(--acid),var(--pink),var(--electric),var(--orange),var(--acid));animation:spin 3.2s linear infinite;z-index:-2;opacity:.86}
+    .btn::after{content:"";position:absolute;inset:3px;border-radius:999px;background:#08080d;z-index:-1}
+    .btn:hover{transform:translateY(-5px) scale(1.03);filter:saturate(1.4)}
+    .btn{color:white;isolation:isolate;z-index:1}.btn.primary,.btn.dark,.btn.ghost{background:transparent;color:white;box-shadow:0 18px 55px rgba(0,229,255,.22)}
+    .btn.primary{color:#fff}.btn.dark{color:#fff}.btn.ghost{color:#fff}
+    .btn:not(:has(*)){font-size:.92rem}.btn{--dummy:0}.btn{ }
+    @keyframes spin{to{transform:rotate(1turn)}}
+
+    .top-strip{display:none}
+    .topbar{position:fixed;top:16px;left:0;right:0;z-index:120;pointer-events:none;transition:.28s ease}
+    .nav{width:min(1120px,calc(100% - 40px));height:74px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:18px;padding:0 12px 0 16px;border-radius:26px;background:rgba(5,5,11,.58);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.28);box-shadow:0 22px 70px rgba(0,0,0,.45),0 0 55px rgba(0,229,255,.14);pointer-events:auto;overflow:hidden}
+    .nav::before{content:"";position:absolute;inset:-2px;background:linear-gradient(90deg,var(--pink),var(--electric),var(--acid),var(--orange));background-size:300% 100%;animation:navGlow 4s linear infinite;z-index:-2}.nav::after{content:"";position:absolute;inset:1px;border-radius:25px;background:rgba(5,5,11,.82);z-index:-1}
+    @keyframes navGlow{to{background-position:300% 0}}
+    .brand{display:flex;align-items:center;gap:11px;font-weight:1000;color:white;min-width:260px}.brand-mark{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,var(--acid),var(--electric),var(--pink));display:grid;place-items:center;color:#05050b;box-shadow:0 0 34px rgba(0,229,255,.35);overflow:hidden;border:1px solid rgba(255,255,255,.66);flex:none}.brand-mark img{width:100%;height:100%;object-fit:cover}.brand span{display:block;line-height:1.02;font-size:.95rem;letter-spacing:-.02em}.brand small{display:block;text-transform:uppercase;letter-spacing:.12em;font-size:.54rem;color:rgba(255,255,255,.65);font-weight:1000;margin-top:4px}
+    .menu{display:flex;align-items:center;justify-content:center;gap:4px;list-style:none;flex:1}.menu a{display:flex;align-items:center;height:44px;font-weight:1000;color:rgba(255,255,255,.80);padding:0 10px;border-radius:14px;font-size:.78rem;transition:.22s ease;white-space:nowrap;text-transform:uppercase;letter-spacing:.02em}.menu a:hover,.menu a.active{background:linear-gradient(90deg,var(--pink),var(--orange));color:white;box-shadow:0 0 28px rgba(255,31,174,.35)}.nav-actions{display:flex;gap:10px;align-items:center;flex:none}.nav-actions .btn{height:45px;padding:0 17px;font-size:.78rem}.menu-toggle{display:none;border:0;background:linear-gradient(135deg,var(--pink),var(--electric));color:white;border-radius:15px;width:46px;height:46px;font-size:1.25rem;box-shadow:0 0 30px rgba(255,31,174,.35);cursor:pointer}.topbar.is-scrolled{top:9px}.topbar.is-scrolled .nav{height:62px}
+
+    .hero{position:relative;min-height:100vh;overflow:hidden;color:white;background:#05050b}.hero-bg{position:absolute;inset:-2%;background:linear-gradient(90deg,rgba(5,5,11,.90) 0%,rgba(18,0,31,.64) 46%,rgba(0,229,255,.13) 100%),url('./imgs/instalacoes_home.png') center/cover no-repeat;transform:scale(1.08);animation:slowZoom 10s ease-in-out infinite alternate}.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 68% 18%,rgba(215,255,0,.55),transparent 24%),radial-gradient(circle at 18% 72%,rgba(255,31,174,.62),transparent 28%),radial-gradient(circle at 80% 80%,rgba(0,229,255,.45),transparent 24%);mix-blend-mode:screen;opacity:.95;animation:pulseHero 3.8s ease-in-out infinite alternate}.hero::after{content:"";position:absolute;left:0;right:0;bottom:-2px;height:170px;background:linear-gradient(0deg,#05050b,transparent)}
+    @keyframes slowZoom{to{transform:scale(1.18) translateX(2%) rotate(.3deg)}}@keyframes pulseHero{to{filter:hue-rotate(45deg) saturate(1.6);transform:scale(1.04)}}
+    .hero-inner{position:relative;z-index:2;min-height:100vh;display:grid;grid-template-columns:1fr .84fr;gap:44px;align-items:center;padding:150px 0 96px}.hero-kicker{display:inline-flex;background:linear-gradient(90deg,var(--acid),var(--electric));border:1px solid rgba(255,255,255,.55);border-radius:999px;padding:11px 16px;color:#05050b;font-weight:1000;text-transform:uppercase;letter-spacing:.13em;font-size:.73rem;box-shadow:0 0 40px rgba(215,255,0,.42)}.hero h1{font-size:clamp(3.8rem,8.8vw,9.4rem);line-height:.78;letter-spacing:-.105em;margin:24px 0 22px;max-width:940px;text-shadow:0 0 22px rgba(0,229,255,.32),0 0 80px rgba(255,31,174,.35)}.hero h1::first-line{color:#fff}.hero p{font-size:1.24rem;color:rgba(255,255,255,.86);max-width:670px;font-weight:700}.hero-actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:36px}.hero-card{align-self:end;justify-self:end;width:min(450px,100%);background:linear-gradient(145deg,rgba(255,255,255,.17),rgba(255,255,255,.06));border:1px solid rgba(255,255,255,.30);border-radius:36px;padding:18px;backdrop-filter:blur(18px);box-shadow:var(--shadow),0 0 55px rgba(255,31,174,.20);transform:rotate(1.5deg);animation:cardFloat 4s ease-in-out infinite alternate}.hero-card img{height:285px;width:100%;object-fit:cover;border-radius:26px;margin-bottom:18px;filter:saturate(1.35) contrast(1.08)}.hero-card h3{font-size:1.55rem;line-height:1.02;margin-bottom:8px;color:var(--acid);text-shadow:0 0 25px rgba(215,255,0,.36)}.hero-card p{font-size:.96rem;color:rgba(255,255,255,.78)}@keyframes cardFloat{to{transform:translateY(-18px) rotate(-1deg)}}
+
+    .quick-stats{position:relative;z-index:8;margin-top:-76px}.stats-band{display:grid;grid-template-columns:repeat(4,1fr);background:rgba(5,5,11,.72);backdrop-filter:blur(20px);border-radius:32px;box-shadow:var(--shadow),0 0 60px rgba(0,229,255,.17);overflow:hidden;border:1px solid rgba(255,255,255,.24)}.qstat{padding:30px 26px;border-right:1px solid rgba(255,255,255,.18);min-height:136px;background:linear-gradient(180deg,rgba(255,255,255,.12),rgba(255,255,255,.03));transition:.25s}.qstat:hover{background:linear-gradient(135deg,rgba(255,31,174,.35),rgba(0,229,255,.24));transform:translateY(-4px)}.qstat:last-child{border-right:0}.qstat strong{display:block;font-size:clamp(1.8rem,3vw,2.8rem);line-height:1;color:var(--acid);text-shadow:0 0 26px rgba(215,255,0,.45)}.qstat span{display:block;color:rgba(255,255,255,.78);font-weight:900;margin-top:10px;font-size:.9rem}
+
+    .about-grid,.panel-layout,.impact-wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:34px;align-items:start}.about-sticky{position:sticky;top:116px}.story-card,.news-card,.impact-item,.service{background:linear-gradient(145deg,rgba(255,255,255,.16),rgba(255,255,255,.055));border:1px solid rgba(255,255,255,.24);border-radius:var(--radius);box-shadow:0 20px 55px rgba(0,0,0,.28);backdrop-filter:blur(14px)}.story-card{padding:30px;transition:.28s}.story-card:hover{transform:translateY(-8px) rotate(.4deg);box-shadow:0 30px 80px rgba(0,0,0,.36),0 0 50px rgba(255,31,174,.18)}.story-card + .story-card{margin-top:18px}.story-card h3{font-size:1.55rem;line-height:1.08;color:var(--acid);margin-bottom:10px}.story-card p{color:var(--muted);font-weight:650}.story-card.feature{display:grid;grid-template-columns:1fr .88fr;gap:24px;align-items:center;background:linear-gradient(135deg,rgba(255,31,174,.24),rgba(0,229,255,.14),rgba(255,255,255,.08))}.story-card.feature img{height:278px;width:100%;object-fit:cover;border-radius:22px;filter:saturate(1.3) contrast(1.08)}
+
+    .green-panel{background:transparent;color:white;position:relative;overflow:hidden}.green-panel::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,31,174,.35),rgba(17,55,255,.55),rgba(5,5,11,.88))}.green-panel::after{content:"";position:absolute;inset:auto -120px -180px auto;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle,rgba(215,255,0,.45),transparent 68%);animation:float 4s ease-in-out infinite alternate}@keyframes float{to{transform:translateY(35px) translateX(-28px) scale(1.1)}}.panel-layout{position:relative;z-index:2;grid-template-columns:1fr 1fr;align-items:center}.panel-image{position:relative;border-radius:44px;overflow:hidden;box-shadow:var(--shadow),0 0 65px rgba(215,255,0,.18);border:1px solid rgba(255,255,255,.25);transform:rotate(-1deg)}.panel-image img{height:610px;width:100%;object-fit:cover;transition:.6s ease;filter:saturate(1.42) contrast(1.08)}.panel-image:hover img{transform:scale(1.09)}.panel-content .eyebrow{background:linear-gradient(90deg,var(--pink),var(--orange));color:white}.panel-content .title{color:white}.panel-content .lead{color:rgba(255,255,255,.82)}.service-grid{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:30px}.service{padding:22px;transition:.25s}.service:hover{transform:translateY(-8px) scale(1.02);background:linear-gradient(135deg,rgba(215,255,0,.20),rgba(0,229,255,.18))}.service b{display:block;color:var(--acid);font-size:1.15rem;margin-bottom:7px}.service span{color:rgba(255,255,255,.74);font-size:.92rem;font-weight:650}
+
+    .sust-head,.gallery-top{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:34px}.sust-grid{display:grid;grid-template-columns:1.2fr .8fr .8fr;grid-auto-rows:300px;gap:18px}.sust-card{position:relative;border-radius:34px;overflow:hidden;background:#111;box-shadow:0 24px 70px rgba(0,0,0,.34);border:1px solid rgba(255,255,255,.24);transition:.25s}.sust-card:hover{transform:translateY(-8px) scale(1.012)}.sust-card img{width:100%;height:100%;object-fit:cover;filter:saturate(1.45) contrast(1.1);transition:.5s ease}.sust-card:hover img{transform:scale(1.09) rotate(.4deg)}.sust-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,5,11,.92),transparent 58%),linear-gradient(120deg,rgba(255,31,174,.20),rgba(0,229,255,.12))}.sust-card .caption{position:absolute;z-index:2;left:24px;right:24px;bottom:24px;color:white}.caption small{color:var(--acid);text-transform:uppercase;letter-spacing:.14em;font-weight:1000;font-size:.68rem}.caption h3{font-size:1.55rem;line-height:1.06;margin-top:6px;text-shadow:0 0 26px rgba(0,0,0,.55)}.sust-card.large{grid-row:span 2}.sust-card.wide{grid-column:span 2}
+
+    .impact{background:transparent}.impact-wrap{grid-template-columns:1fr 1.06fr;align-items:center}.impact-list{display:grid;gap:16px}.impact-item{display:flex;gap:18px;padding:22px;align-items:flex-start;transition:.25s}.impact-item:hover{transform:translateX(10px);background:linear-gradient(135deg,rgba(255,31,174,.24),rgba(0,229,255,.16))}.num{flex:none;width:50px;height:50px;border-radius:17px;background:linear-gradient(135deg,var(--acid),var(--electric));color:#05050b;font-weight:1000;display:grid;place-items:center;box-shadow:0 0 32px rgba(215,255,0,.35)}.impact-item h3{font-size:1.32rem;color:var(--acid);margin-bottom:4px}.impact-item p{color:var(--muted);font-weight:650}.impact-photo{border-radius:44px;overflow:hidden;box-shadow:var(--shadow),0 0 60px rgba(0,229,255,.18);border:1px solid rgba(255,255,255,.24);transform:rotate(1deg)}.impact-photo img{height:620px;width:100%;object-fit:cover;filter:saturate(1.4) contrast(1.08)}
+
+    .gallery-section{background:transparent;position:relative;overflow:hidden}.gallery-section::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba(215,255,0,.16),rgba(255,122,0,.22),rgba(5,5,11,.88))}.gallery-shell{position:relative;z-index:2}.gallery-controls{display:flex;gap:10px;align-items:center}.round-btn{width:54px;height:54px;border-radius:50%;border:1px solid rgba(255,255,255,.30);background:linear-gradient(135deg,var(--pink),var(--electric));color:white;font-size:1.45rem;font-weight:1000;cursor:pointer;box-shadow:0 0 35px rgba(255,31,174,.28);transition:.25s}.round-btn:hover{transform:translateY(-5px) scale(1.06);filter:hue-rotate(45deg)}.gallery-carousel{display:flex;gap:18px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;padding:8px 4px 24px;scrollbar-width:thin}.gallery-slide{min-width:355px;scroll-snap-align:start;border:0;background:transparent;cursor:pointer;text-align:left;color:white}.gallery-photo{height:430px;border-radius:34px;overflow:hidden;position:relative;box-shadow:0 24px 70px rgba(0,0,0,.34);background:#111;border:1px solid rgba(255,255,255,.24)}.gallery-photo img{width:100%;height:100%;object-fit:cover;transition:.55s ease;filter:saturate(1.45) contrast(1.1)}.gallery-slide:hover .gallery-photo img{transform:scale(1.09) rotate(.4deg)}.gallery-photo::after{content:"Clique para ampliar";position:absolute;left:18px;right:18px;bottom:18px;background:linear-gradient(90deg,var(--acid),var(--electric));color:#05050b;border-radius:18px;padding:12px 15px;font-size:.85rem;font-weight:1000;opacity:0;transform:translateY(10px);transition:.25s}.gallery-slide:hover .gallery-photo::after{opacity:1;transform:translateY(0)}.gallery-slide h3{font-size:1.28rem;line-height:1.1;margin:16px 0 5px;color:var(--acid)}.gallery-slide p{color:var(--muted);font-size:.94rem;font-weight:650}.lightbox{position:fixed;inset:0;z-index:200;background:rgba(2,2,8,.90);backdrop-filter:blur(18px);display:none;align-items:center;justify-content:center;padding:28px}.lightbox.open{display:flex}.lightbox-card{width:min(1120px,100%);position:relative;color:white}.lightbox-image-wrap{border-radius:34px;overflow:hidden;background:#111;box-shadow:0 35px 100px rgba(0,0,0,.55),0 0 70px rgba(0,229,255,.20);border:1px solid rgba(255,255,255,.25)}.lightbox-image{width:100%;height:min(74vh,720px);object-fit:cover}.lightbox-info{display:flex;justify-content:space-between;gap:18px;align-items:start;margin-top:18px}.lightbox-info h3{font-size:1.55rem;line-height:1.1;color:var(--acid)}.lightbox-info p{color:rgba(255,255,255,.74);margin-top:4px}.lightbox-close{position:absolute;right:0;top:-62px;background:linear-gradient(90deg,var(--acid),var(--electric));color:#05050b;border:0;border-radius:999px;padding:12px 18px;font-weight:1000;cursor:pointer}.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border-radius:50%;border:1px solid rgba(255,255,255,.34);background:linear-gradient(135deg,var(--pink),var(--electric));color:white;font-size:2rem;cursor:pointer;transition:.25s}.lightbox-nav:hover{filter:hue-rotate(70deg);scale:1.06}.lightbox-prev{left:-72px}.lightbox-next{right:-72px}
+
+    .news-section{background:transparent}.news-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:34px}.news-card{overflow:hidden;transition:.25s}.news-card:hover{transform:translateY(-9px) rotate(.5deg);box-shadow:0 30px 90px rgba(0,0,0,.38),0 0 55px rgba(255,31,174,.18)}.news-card img{height:220px;width:100%;object-fit:cover;filter:saturate(1.4) contrast(1.08)}.news-body{padding:25px}.news-body small{display:inline-block;color:#05050b;background:linear-gradient(90deg,var(--acid),var(--electric));font-weight:1000;text-transform:uppercase;letter-spacing:.1em;font-size:.68rem;margin-bottom:12px;padding:7px 10px;border-radius:999px}.news-body h3{font-size:1.38rem;line-height:1.11;margin-bottom:10px;color:var(--acid)}.news-body p{color:var(--muted);font-size:.96rem;font-weight:650}
+
+    .cta{background:#05050b;color:white;padding:92px 0;position:relative;overflow:hidden}.cta::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(5,5,11,.88),rgba(255,31,174,.35),rgba(0,229,255,.22)),url('./imgs/lago_piscicultura.png') center/cover no-repeat;opacity:.98;filter:saturate(1.3)}.cta::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 80% 30%,rgba(215,255,0,.40),transparent 30%);mix-blend-mode:screen}.cta .container{position:relative;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:30px}.cta h2{font-size:clamp(2.35rem,4.5vw,4.8rem);line-height:.88;letter-spacing:-.075em;max-width:760px;text-shadow:0 0 45px rgba(255,31,174,.35)}.cta p{color:rgba(255,255,255,.80);max-width:680px;margin-top:16px;font-weight:650}
+
+    .footer{background:#030307;color:white;padding:60px 0 24px;border-top:1px solid rgba(255,255,255,.16)}.footer-grid{display:grid;grid-template-columns:1.3fr .8fr .8fr 1fr;gap:34px;margin-bottom:38px}.footer h4{color:var(--acid);margin-bottom:14px}.footer p,.footer a,.footer li{color:rgba(255,255,255,.72);font-weight:600}.footer ul{list-style:none;display:grid;gap:8px}.footer-bottom{padding-top:22px;border-top:1px solid rgba(255,255,255,.13);display:flex;justify-content:space-between;gap:20px;color:rgba(255,255,255,.58);font-size:.9rem}
+
+    .reveal{opacity:0;transform:translateY(30px) scale(.98);filter:blur(7px);transition:.8s cubic-bezier(.2,.8,.2,1)}.reveal.show{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+    .chaos-text{background:linear-gradient(90deg,var(--acid),var(--electric),var(--pink),var(--orange));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+    @media(max-width:980px){
+      .menu-toggle{display:block;flex:none}.topbar{top:12px}.nav{width:calc(100% - 28px);height:66px;border-radius:22px;padding:0 10px 0 12px;gap:10px}.brand{min-width:0;flex:1}.brand-mark{width:42px;height:42px;border-radius:14px}.brand span{font-size:.88rem;max-width:230px}.brand small{font-size:.50rem;letter-spacing:.08em}.menu{position:absolute;top:76px;left:14px;right:14px;background:rgba(5,5,11,.94);backdrop-filter:blur(22px);border:1px solid rgba(255,255,255,.18);border-radius:22px;box-shadow:0 22px 60px rgba(0,0,0,.42);padding:10px;display:none;flex-direction:column;align-items:stretch;gap:5px;flex:none}.menu.open{display:flex}.menu a{height:auto;padding:14px 16px;border-radius:15px;font-size:.92rem;justify-content:flex-start}.nav-actions .btn{display:none}.hero,.hero-inner{min-height:auto}.hero-inner,.about-grid,.panel-layout,.impact-wrap{grid-template-columns:1fr}.hero-inner{padding:126px 0 115px}.hero-card{justify-self:stretch}.stats-band{grid-template-columns:1fr 1fr}.qstat{border-bottom:1px solid rgba(255,255,255,.18)}.qstat:nth-child(2){border-right:0}.about-sticky{position:relative;top:auto}.sust-grid{grid-template-columns:1fr 1fr;grid-auto-rows:270px}.sust-card.large,.sust-card.wide{grid-column:auto;grid-row:auto}.news-grid,.footer-grid{grid-template-columns:1fr 1fr}.gallery-top{display:block}.gallery-controls{margin-top:18px}.gallery-slide{min-width:310px}.lightbox-prev{left:14px}.lightbox-next{right:14px}.lightbox-close{right:0;top:-58px}.cta .container{display:block}.cta .btn{margin-top:24px}
+    }
+    @media(max-width:640px){
+      .container{width:calc(100% - 28px)}.section{padding:74px 0}.brand span{font-size:.78rem;max-width:178px}.brand small{font-size:.45rem}.hero h1{font-size:3.35rem}.hero p{font-size:1rem}.hero-actions{flex-direction:column}.btn{width:100%}.hero-card{transform:none}.hero-card img{height:220px}.stats-band,.story-card.feature,.service-grid,.sust-grid,.news-grid,.footer-grid{grid-template-columns:1fr}.qstat{border-right:0}.sust-head{display:block}.panel-image{transform:none}.panel-image img,.impact-photo img{height:370px}.gallery-slide{min-width:86vw}.gallery-photo{height:330px;border-radius:24px}.lightbox{padding:16px}.lightbox-image{height:62vh}.lightbox-info{display:block}.lightbox-nav{width:46px;height:46px;font-size:1.55rem}.footer-bottom{display:block}.footer-bottom span{display:block;margin-top:8px}
+    }
+  </style>
+</head>
+<body>
+  <div class="top-strip">
+    <div class="container">
+      <span>Praia Norte/TO • Agricultura familiar • Sustentabilidade • Geração de renda</span>
+      <span>pequenomarinheiro@portopraianorte.com.br</span>
+    </div>
+  </div>
+
+  <header class="topbar">
+    <div class="container nav">
+      <a class="brand" href="#home" aria-label="Projeto Pequeno Marinheiro">
+        <span class="brand-mark"><img src="./imgs/logo_pequeno_marinheiro.jpg" alt="Logo Pequeno Marinheiro" onerror="this.style.display='none';this.parentElement.textContent='PM'"></span>
+        <span>Projeto Pequeno Marinheiro<small>Agricultura familiar sustentável</small></span>
+      </a>
+      <button class="menu-toggle" aria-label="Abrir menu">☰</button>
+      <ul class="menu">
+        <li><a class="active" href="#home">Início</a></li>
+        <li><a href="#sobre">Quem somos</a></li>
+        <li><a href="#producao">Produção</a></li>
+        <li><a href="#sustentabilidade">Sustentabilidade</a></li>
+        <li><a href="#impacto">Impacto</a></li>
+        <li><a href="#galeria">Galeria</a></li>
+        <li><a href="#noticias">Notícias</a></li>
+      </ul>
+      <div class="nav-actions"><a class="btn dark" href="#contato">Fale conosco</a></div>
+    </div>
+  </header>
+
+  <main>
+    <section id="home" class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="reveal">
+          <span class="hero-kicker">Energia do campo em alta potência</span>
+          <h1>Agricultura familiar em modo impacto total.</h1>
+          <p>O Projeto Pequeno Marinheiro fortalece famílias, promove produção sustentável e transforma o território de Praia Norte com trabalho, capacitação e alimento de qualidade.</p>
+          <div class="hero-actions">
+            <a class="btn primary" href="#sobre">Conheça o projeto</a>
+            <a class="btn ghost" href="#impacto">Ver impacto social</a>
+          </div>
+        </div>
+        <aside class="hero-card reveal">
+          <img src="./imgs/hortalicas_embaladas.png" alt="Hortaliças produzidas pelo projeto">
+          <h3>Produção local com presença, cor e força.</h3>
+          <p>Uma iniciativa pensada para unir agricultura, comunidade e sustentabilidade em uma mesma direção.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="quick-stats">
+      <div class="container stats-band reveal">
+        <div class="qstat"><strong data-count="20000">20.000m²</strong><span>de área produtiva sustentável</span></div>
+        <div class="qstat"><strong data-count="12">12</strong><span>culturas agrícolas e frentes produtivas</span></div>
+        <div class="qstat"><strong data-count="18">18</strong><span>prestadores e voluntários envolvidos</span></div>
+        <div class="qstat"><strong data-count="3">03</strong><span>técnicos especializados acompanhando o projeto</span></div>
+      </div>
+    </section>
+
+    <section id="sobre" class="section">
+      <div class="container about-grid">
+        <div class="about-sticky reveal">
+          <span class="eyebrow">Quem somos</span>
+          <h2 class="title">Um projeto vivo, forte e impossível de passar despercebido.</h2>
+          <p class="lead">Inspirado em uma linguagem corporativa forte, como grandes cooperativas, este layout valoriza a história, a produção e o impacto social do Pequeno Marinheiro.</p>
+        </div>
+        <div>
+          <article class="story-card feature reveal">
+            <div>
+              <h3>Desenvolvimento comunitário sustentável</h3>
+              <p>A associação atua em Praia Norte e região do Bico do Papagaio com foco em agricultura familiar, capacitação, fortalecimento social e geração de renda.</p>
+            </div>
+            <img src="./imgs/foto3_galeria.png" alt="Produção agrícola do projeto">
+          </article>
+          <article class="story-card reveal">
+            <h3>Mais que produção: pertencimento</h3>
+            <p>Cada frente do projeto aproxima a comunidade da terra, melhora o acesso a alimentos frescos e cria novas possibilidades econômicas para famílias locais.</p>
+          </article>
+          <article class="story-card reveal">
+            <h3>Organização, transparência e futuro</h3>
+            <p>O site foi pensado para transmitir confiança para parceiros, investidores, órgãos públicos e pessoas interessadas em apoiar uma iniciativa sustentável.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="producao" class="section green-panel">
+      <div class="container panel-layout">
+        <div class="panel-image reveal">
+          <img src="./imgs/melancias_cultivo.png" alt="Cultivo de melancias">
+        </div>
+        <div class="panel-content reveal">
+          <span class="eyebrow">Produção</span>
+          <h2 class="title">Alimento, trabalho e sustentabilidade na mesma colheita.</h2>
+          <p class="lead">A produção integra hortaliças, frutas, irrigação, uso sustentável da água e ações de capacitação para ampliar o impacto positivo no território.</p>
+          <div class="service-grid">
+            <div class="service"><b>Hortaliças frescas</b><span>Produtos cultivados com cuidado e destinados à comunidade.</span></div>
+            <div class="service"><b>Frutas e culturas</b><span>Diversidade produtiva para fortalecer a segurança alimentar.</span></div>
+            <div class="service"><b>Carvão de babaçu</b><span>Aproveitamento ecológico com alta durabilidade e valor local.</span></div>
+            <div class="service"><b>Ponto de venda social</b><span>Produção aproximada de quem mais precisa.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sustentabilidade" class="section">
+      <div class="container">
+        <div class="sust-head reveal">
+          <div>
+            <span class="eyebrow">Sustentabilidade</span>
+            <h2 class="title">Frentes que fazem o projeto avançar.</h2>
+          </div>
+          <p class="lead">A estética desta seção segue a ideia de blocos visuais grandes, como em sites de cooperativas modernas: imagem forte, pouco texto e mensagem clara.</p>
+        </div>
+        <div class="sust-grid reveal">
+          <article class="sust-card large"><img src="./imgs/lago_piscicultura.png" alt="Lago para piscicultura"><div class="caption"><small>Água e vida</small><h3>Lago para irrigação, piscicultura e paisagismo.</h3></div></article>
+          <article class="sust-card"><img src="./imgs/paineis_solares.jpg" alt="Painéis solares"><div class="caption"><small>Energia</small><h3>Estrutura com olhar para eficiência e futuro.</h3></div></article>
+          <article class="sust-card"><img src="./imgs/carvao_babacu.png" alt="Carvão de coco babaçu"><div class="caption"><small>Ecológico</small><h3>Carvão do coco babaçu com valor sustentável.</h3></div></article>
+          <article class="sust-card wide"><img src="./imgs/cartao_social.jpg" alt="Ponto de Venda Social"><div class="caption"><small>Comunidade</small><h3>Ponto de Venda Social aproximando produção e famílias.</h3></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="impacto" class="section impact">
+      <div class="container impact-wrap">
+        <div class="reveal">
+          <span class="eyebrow">Impacto social</span>
+          <h2 class="title">Pessoas no centro do desenvolvimento.</h2>
+          <p class="lead">A linguagem visual valoriza o lado humano do projeto, reforçando que cada resultado nasce do trabalho coletivo.</p>
+          <div class="impact-list" style="margin-top:28px">
+            <div class="impact-item"><span class="num">01</span><div><h3>Capacitação local</h3><p>Formação e acompanhamento técnico para fortalecer o trabalho no campo.</p></div></div>
+            <div class="impact-item"><span class="num">02</span><div><h3>Geração de renda</h3><p>Novas oportunidades ligadas à produção, comercialização e serviços.</p></div></div>
+            <div class="impact-item"><span class="num">03</span><div><h3>Segurança alimentar</h3><p>Alimentos frescos e de qualidade chegando mais perto da comunidade.</p></div></div>
+          </div>
+        </div>
+        <div class="impact-photo reveal"><img src="./imgs/temperos_embalados.png" alt="Temperos embalados"></div>
+      </div>
+    </section>
+
+
+
+    <section id="galeria" class="section gallery-section">
+      <div class="container gallery-shell">
+        <div class="gallery-top reveal">
+          <div>
+            <span class="eyebrow">Galeria</span>
+            <h2 class="title">Imagens que contam a história do campo.</h2>
+            <p class="lead">Um carrossel visual para apresentar produção, estrutura, alimentos e sustentabilidade. Clique em qualquer imagem para ampliar.</p>
+          </div>
+          <div class="gallery-controls" aria-label="Controles da galeria">
+            <button class="round-btn gallery-back" type="button" aria-label="Voltar imagens">‹</button>
+            <button class="round-btn gallery-forward" type="button" aria-label="Avançar imagens">›</button>
+          </div>
+        </div>
+
+        <div class="gallery-carousel reveal" aria-label="Carrossel de imagens do projeto">
+          <button class="gallery-slide" type="button" data-title="Produção de hortaliças" data-desc="Alimentos frescos, cultivados com cuidado e destinados à comunidade." data-img="./imgs/hortalicas_embaladas.png">
+            <div class="gallery-photo"><img src="./imgs/hortalicas_embaladas.png" alt="Hortaliças embaladas"></div>
+            <h3>Produção de hortaliças</h3><p>Alimentos frescos e organização produtiva.</p>
+          </button>
+          <button class="gallery-slide" type="button" data-title="Cultivo sustentável" data-desc="Frutas e culturas agrícolas fortalecendo a segurança alimentar local." data-img="./imgs/melancias_cultivo.png">
+            <div class="gallery-photo"><img src="./imgs/melancias_cultivo.png" alt="Melancias em cultivo sustentável"></div>
+            <h3>Cultivo sustentável</h3><p>Produção no campo com manejo responsável.</p>
+          </button>
+          <button class="gallery-slide" type="button" data-title="Lago e irrigação" data-desc="Estrutura de água para irrigação, paisagismo e novas possibilidades produtivas." data-img="./imgs/lago_piscicultura.png">
+            <div class="gallery-photo"><img src="./imgs/lago_piscicultura.png" alt="Lago para piscicultura e irrigação"></div>
+            <h3>Lago e irrigação</h3><p>Água como base para desenvolvimento.</p>
+          </button>
+          <button class="gallery-slide" type="button" data-title="Energia e futuro" data-desc="Soluções sustentáveis que reforçam eficiência e visão de longo prazo." data-img="./imgs/paineis_solares.jpg">
+            <div class="gallery-photo"><img src="./imgs/paineis_solares.jpg" alt="Painéis solares"></div>
+            <h3>Energia e futuro</h3><p>Estrutura com olhar sustentável.</p>
+          </button>
+          <button class="gallery-slide" type="button" data-title="Produtos locais" data-desc="Produtos com apresentação valorizada para aproximar produção e comunidade." data-img="./imgs/amendoim_produtos.png">
+            <div class="gallery-photo"><img src="./imgs/amendoim_produtos.png" alt="Produtos locais de amendoim"></div>
+            <h3>Produtos locais</h3><p>Valor agregado à agricultura familiar.</p>
+          </button>
+          <button class="gallery-slide" type="button" data-title="Temperos frescos" data-desc="Organização, embalagem e qualidade visual para fortalecer a venda social." data-img="./imgs/temperos_embalados.png">
+            <div class="gallery-photo"><img src="./imgs/temperos_embalados.png" alt="Temperos frescos embalados"></div>
+            <h3>Temperos frescos</h3><p>Qualidade, cuidado e identidade local.</p>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Imagem ampliada da galeria">
+      <div class="lightbox-card">
+        <button class="lightbox-close" type="button">Fechar ✕</button>
+        <button class="lightbox-nav lightbox-prev" type="button" aria-label="Imagem anterior">‹</button>
+        <div class="lightbox-image-wrap"><img class="lightbox-image" src="" alt=""></div>
+        <button class="lightbox-nav lightbox-next" type="button" aria-label="Próxima imagem">›</button>
+        <div class="lightbox-info">
+          <div><h3 class="lightbox-title"></h3><p class="lightbox-desc"></p></div>
+          <p class="lightbox-count"></p>
+        </div>
+      </div>
+    </div>
+
+    <section id="noticias" class="section news-section">
+      <div class="container">
+        <span class="eyebrow">Comunicação</span>
+        <h2 class="title">Notícias e atualizações.</h2>
+        <p class="lead">Uma área de notícias no estilo institucional ajuda a mostrar movimento, transparência e evolução constante.</p>
+        <div class="news-grid reveal">
+          <article class="news-card"><img src="./imgs/alface_embalada.png" alt="Alfaces embaladas"><div class="news-body"><small>Produção</small><h3>Nova etapa fortalece alimentos frescos em Praia Norte</h3><p>Colheitas e organização produtiva ampliam o alcance da iniciativa.</p></div></article>
+          <article class="news-card"><img src="./imgs/amendoim_produtos.png" alt="Produtos de amendoim"><div class="news-body"><small>Renda</small><h3>Produtos locais ganham nova apresentação para venda social</h3><p>Mais qualidade visual, organização e valor agregado à produção.</p></div></article>
+          <article class="news-card"><img src="./imgs/hortalicas_embaladas.png" alt="Hortaliças embaladas"><div class="news-body"><small>Comunidade</small><h3>Capacitação e trabalho coletivo movimentam o projeto</h3><p>Pessoas, conhecimento e produção caminham juntos no desenvolvimento local.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato" class="cta">
+      <div class="container">
+        <div>
+          <h2>Vamos cultivar novas parcerias?</h2>
+          <p>Entre em contato para conhecer melhor o Projeto Pequeno Marinheiro, propor parcerias ou apoiar uma iniciativa de agricultura familiar sustentável.</p>
+        </div>
+        <a class="btn primary" href="mailto:pequenomarinheiro@portopraianorte.com.br">Enviar mensagem</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div><h4>Projeto Pequeno Marinheiro</h4><p>Agricultura familiar, sustentabilidade, capacitação e desenvolvimento social em Praia Norte, Tocantins.</p></div>
+        <div><h4>Navegação</h4><ul><li><a href="#sobre">Quem somos</a></li><li><a href="#producao">Produção</a></li><li><a href="#impacto">Impacto</a></li><li><a href="#galeria">Galeria</a></li><li><a href="#noticias">Notícias</a></li></ul></div>
+        <div><h4>Frentes</h4><ul><li>Hortaliças</li><li>Frutas</li><li>Piscicultura</li><li>Carvão ecológico</li></ul></div>
+        <div><h4>Contato</h4><p>Praia Norte/TO<br>Palmas/TO<br>Vinhedo/SP</p><p><a href="mailto:pequenomarinheiro@portopraianorte.com.br">pequenomarinheiro@portopraianorte.com.br</a></p></div>
+      </div>
+      <div class="footer-bottom"><p>© 2026 Projeto Pequeno Marinheiro.</p><span>Layout conceito inspirado em cooperativas modernas.</span></div>
+    </div>
+  </footer>
+
+  <script>
+    const toggle = document.querySelector('.menu-toggle');
+    const menu = document.querySelector('.menu');
+    toggle?.addEventListener('click', () => menu.classList.toggle('open'));
+    document.querySelectorAll('.menu a').forEach(a => a.addEventListener('click', () => menu.classList.remove('open')));
+
+    const topbar = document.querySelector('.topbar');
+    const updateTopbar = () => topbar?.classList.toggle('is-scrolled', window.scrollY > 24);
+    updateTopbar();
+    window.addEventListener('scroll', updateTopbar, {passive:true});
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, {threshold:.12});
+    document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+    const links = [...document.querySelectorAll('.menu a')];
+    const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+    window.addEventListener('scroll', () => {
+      let current = sections[0]?.id;
+      sections.forEach(s => { if(scrollY >= s.offsetTop - 160) current = s.id; });
+      links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + current));
+    });
+
+    const counters = document.querySelectorAll('[data-count]');
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(!entry.isIntersecting || entry.target.dataset.done) return;
+        entry.target.dataset.done = '1';
+        const end = Number(entry.target.dataset.count);
+        const original = entry.target.textContent;
+        let start = 0;
+        const duration = 1300;
+        const t0 = performance.now();
+        function tick(now){
+          const p = Math.min((now - t0) / duration, 1);
+          const value = Math.floor(end * (1 - Math.pow(1 - p, 3)));
+          if(original.includes('m²')) entry.target.textContent = value.toLocaleString('pt-BR') + 'm²';
+          else if(original.trim().startsWith('03')) entry.target.textContent = String(value).padStart(2,'0');
+          else entry.target.textContent = value.toLocaleString('pt-BR');
+          if(p < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    }, {threshold:.5});
+    counters.forEach(c => counterObserver.observe(c));
+
+
+    const carousel = document.querySelector('.gallery-carousel');
+    document.querySelector('.gallery-back')?.addEventListener('click', () => carousel?.scrollBy({left:-390, behavior:'smooth'}));
+    document.querySelector('.gallery-forward')?.addEventListener('click', () => carousel?.scrollBy({left:390, behavior:'smooth'}));
+
+    const slides = [...document.querySelectorAll('.gallery-slide')];
+    const lightbox = document.querySelector('.lightbox');
+    const lightboxImg = document.querySelector('.lightbox-image');
+    const lightboxTitle = document.querySelector('.lightbox-title');
+    const lightboxDesc = document.querySelector('.lightbox-desc');
+    const lightboxCount = document.querySelector('.lightbox-count');
+    let currentGalleryIndex = 0;
+
+    function openGallery(index){
+      currentGalleryIndex = (index + slides.length) % slides.length;
+      const item = slides[currentGalleryIndex];
+      lightboxImg.src = item.dataset.img;
+      lightboxImg.alt = item.dataset.title;
+      lightboxTitle.textContent = item.dataset.title;
+      lightboxDesc.textContent = item.dataset.desc;
+      lightboxCount.textContent = `${currentGalleryIndex + 1} / ${slides.length}`;
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeGallery(){
+      lightbox.classList.remove('open');
+      document.body.style.overflow = '';
+    }
+    function nextGallery(){ openGallery(currentGalleryIndex + 1); }
+    function prevGallery(){ openGallery(currentGalleryIndex - 1); }
+
+    slides.forEach((slide, index) => slide.addEventListener('click', () => openGallery(index)));
+    document.querySelector('.lightbox-close')?.addEventListener('click', closeGallery);
+    document.querySelector('.lightbox-next')?.addEventListener('click', nextGallery);
+    document.querySelector('.lightbox-prev')?.addEventListener('click', prevGallery);
+    lightbox?.addEventListener('click', event => { if(event.target === lightbox) closeGallery(); });
+    window.addEventListener('keydown', event => {
+      if(!lightbox?.classList.contains('open')) return;
+      if(event.key === 'Escape') closeGallery();
+      if(event.key === 'ArrowRight') nextGallery();
+      if(event.key === 'ArrowLeft') prevGallery();
+    });
+  </script>
+</body>
+</html>
