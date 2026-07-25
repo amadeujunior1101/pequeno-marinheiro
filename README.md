@@ -1,2 +1,3 @@
-Primeiro commit do projeto.
-Alteração feita pela Conta B.
+# Primeiro commit do projeto.
+
+*[] - Nova funcionalidade criada pelo projeto original.
