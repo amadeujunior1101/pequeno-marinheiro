@@ -1,3 +1,3 @@
-# Arquivo adicionado no repo original
+# Alterado no repo original
 
 * [ ] - funciona
